@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import DesktopMenu from './DesktopMenu';
 import Logo from './Logo';
+import MegaMenu from './MegaMenu';
 import MobileMenu from './MobileMenu';
 import MobileMenuIcon from './MobileMenuIcon';
 import SearchBar from './SearchBar';
@@ -23,6 +24,8 @@ const Header = () => {
 			</div>
 
 			<div>{isOpen && <MobileMenu setIsOpen={setIsOpen} />}</div>
+
+			<MegaMenu />
 		</header>
 	);
 };
