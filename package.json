@@ -1,0 +1,24 @@
+{
+	"name": "rststore",
+	"version": "1.0.0",
+	"main": "main.js",
+	"type": "module",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+ssh://git@gitlab.com/rstforumnet/rststore-daily-evening-july-2025.git"
+	},
+	"keywords": [],
+	"author": "Rahul Sharma",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://gitlab.com/rstforumnet/rststore-daily-evening-july-2025/issues"
+	},
+	"homepage": "https://gitlab.com/rstforumnet/rststore-daily-evening-july-2025#readme",
+	"description": "",
+	"dependencies": {
+		"express": "^5.1.0"
+	}
+}
