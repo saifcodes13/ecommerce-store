@@ -1,7 +1,20 @@
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+
 import ProductCard from '@components/ProductCard';
-import products from '@data/products';
 
 const HomeScreen = () => {
+	const [products, setProducts] = useState([]);
+
+	useEffect(() => {
+		const fetchProducts = async () => {
+			const { data } = await axios.get('/api/v1/products');
+			setProducts(data);
+		};
+
+		fetchProducts();
+	}, []);
+
 	return (
 		<section className='bg-white'>
 			<div className='mx-auto max-w-7xl px-3 py-10 sm:px-6 lg:px-8'>
