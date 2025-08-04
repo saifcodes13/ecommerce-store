@@ -1,8 +1,8 @@
 import dotenv from 'dotenv';
 import express from 'express';
 
-import connectDB from './config/db.config.js';
-import products from './data/products.data.js';
+import connectDB from '#config/db.config.js';
+import products from '#data/products.data.js';
 
 dotenv.config();
 

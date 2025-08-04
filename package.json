@@ -9,6 +9,10 @@
 		"client": "npm run dev --prefix client",
 		"dev": "concurrently \"npm run server\" \"npm run client\""
 	},
+	"imports": {
+		"#config/*": "./server/config/*",
+		"#data/*": "./server/data/*"
+	},
 	"repository": {
 		"type": "git",
 		"url": "git+ssh://git@gitlab.com/rstforumnet/rststore-daily-evening-july-2025.git"
@@ -27,6 +31,7 @@
 		"mongoose": "^8.17.0"
 	},
 	"devDependencies": {
+		"@babel/preset-env": "^7.28.0",
 		"concurrently": "^9.2.0",
 		"nodemon": "^3.1.10"
 	}
