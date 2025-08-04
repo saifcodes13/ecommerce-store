@@ -4,6 +4,7 @@
 		"paths": {
 			"#data/*": ["data/*"],
 			"#config/*": ["config/*"],
+			"#models/*": ["models/*"],
 		},
 		"module": "commonjs",
 		"target": "ES6"
