@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import express from 'express';
+import morgan from 'morgan';
 
 import connectDB from '#config/db.config.js';
 import products from '#data/products.data.js';
@@ -11,6 +12,8 @@ connectDB();
 const port = process.env.PORT || 5000;
 
 const app = express();
+
+app.use(morgan('dev'));
 
 app.get('/', (req, res) => {
 	res.json({
