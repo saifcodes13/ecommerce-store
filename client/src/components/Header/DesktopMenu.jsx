@@ -17,9 +17,11 @@ const DesktopMenu = () => {
 
 			<div className='flex items-center gap-2'>
 				<MenuItem url='/cart' label='Cart' icon={ShoppingBagIcon} />
-				<span className='min-w-5 rounded-full bg-indigo-700 text-center text-sm font-semibold text-white'>
-					{cartItems.length}
-				</span>
+				{cartItems.length > 0 && (
+					<span className='min-w-5 rounded-full bg-indigo-700 text-center text-sm font-semibold text-white'>
+						{cartItems.length}
+					</span>
+				)}
 			</div>
 		</nav>
 	);
