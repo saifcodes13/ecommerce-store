@@ -3,7 +3,7 @@ import generateToken from '#utils/generate-token.utils.js';
 
 /**
  * @desc		Auth user
- * @route		POST /api/users/login
+ * @route		POST /api/v1/users/login
  * @access	Public
  */
 const authUser = async (req, res) => {
@@ -30,7 +30,7 @@ const authUser = async (req, res) => {
 
 /**
  * @desc		Register user
- * @route		POST /api/users
+ * @route		POST /api/v1/users
  * @access	Public
  */
 const registerUser = async (req, res) => {
@@ -64,16 +64,21 @@ const registerUser = async (req, res) => {
 
 /**
  * @desc		Logout user
- * @route		POST /api/users
+ * @route		POST /api/v1/users/logout
  * @access	Private
  */
 const logoutUser = async (req, res) => {
-	res.send('Logout user');
+	res.cookie('jwt', '', {
+		httpOnly: true,
+		expires: new Date(0),
+	});
+
+	res.status(200).json({ message: 'User logged out' });
 };
 
 /**
  * @desc		Get user profile
- * @route		GET /api/users/profile
+ * @route		GET /api/v1/users/profile
  * @access	Private
  */
 const getUserProfile = async (req, res) => {
@@ -82,7 +87,7 @@ const getUserProfile = async (req, res) => {
 
 /**
  * @desc		Update user profile
- * @route		PUT /api/users/profile
+ * @route		PUT /api/v1/users/profile
  * @access	Private
  */
 const updateUserProfile = async (req, res) => {
@@ -91,7 +96,7 @@ const updateUserProfile = async (req, res) => {
 
 /**
  * @desc		Get all users
- * @route		GET /api/users
+ * @route		GET /api/v1/users
  * @access	Private/Admin
  */
 const getUsers = async (req, res) => {
@@ -100,7 +105,7 @@ const getUsers = async (req, res) => {
 
 /**
  * @desc		Get user by ID
- * @route		GET /api/users/:id
+ * @route		GET /api/v1/users/:id
  * @access	Private/Admin
  */
 const getUserById = async (req, res) => {
@@ -109,7 +114,7 @@ const getUserById = async (req, res) => {
 
 /**
  * @desc		Delete user
- * @route		DELETE /api/users/:id
+ * @route		DELETE /api/v1/users/:id
  * @access	Private/Admin
  */
 const deleteUser = async (req, res) => {
@@ -118,7 +123,7 @@ const deleteUser = async (req, res) => {
 
 /**
  * @desc		Update user
- * @route		PUT /api/users/:id
+ * @route		PUT /api/v1/users/:id
  * @access	Private/Admin
  */
 const updateUser = async (req, res) => {
