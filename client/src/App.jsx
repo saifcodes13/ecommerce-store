@@ -1,5 +1,7 @@
 import { Provider } from 'react-redux';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Layout from '@components/Layout';
 import CartScreen from '@screens/Cart';
@@ -39,6 +41,11 @@ const App = () => {
 	return (
 		<Provider store={store}>
 			<RouterProvider router={router} />
+			<ToastContainer
+				position='bottom-right'
+				hideProgressBar
+				autoClose={5000}
+			/>
 		</Provider>
 	);
 };
