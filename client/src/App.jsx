@@ -10,6 +10,7 @@ import HomeScreen from '@screens/Home';
 import LoginScreen from '@screens/Login';
 import ProductDetails from '@screens/ProductDetails';
 import RegisterScreen from '@screens/Register';
+import ShippingScreen from '@screens/Shipping';
 import store from './store';
 
 const router = createBrowserRouter([
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
 			{
 				path: '/register',
 				element: <RegisterScreen />,
+			},
+			{
+				path: '/shipping',
+				element: <ShippingScreen />,
 			},
 		],
 	},
