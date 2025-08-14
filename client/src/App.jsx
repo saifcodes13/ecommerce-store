@@ -4,6 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Layout from '@components/Layout';
+import PrivateRoute from '@components/PrivateRoute';
 import CartScreen from '@screens/Cart';
 import ErrorScreen from '@screens/Error';
 import HomeScreen from '@screens/Home';
@@ -40,8 +41,14 @@ const router = createBrowserRouter([
 				element: <RegisterScreen />,
 			},
 			{
-				path: '/shipping',
-				element: <ShippingScreen />,
+				path: '',
+				element: <PrivateRoute />,
+				children: [
+					{
+						path: '/shipping',
+						element: <ShippingScreen />,
+					},
+				],
 			},
 		],
 	},
