@@ -9,6 +9,7 @@ import CartScreen from '@screens/Cart';
 import ErrorScreen from '@screens/Error';
 import HomeScreen from '@screens/Home';
 import LoginScreen from '@screens/Login';
+import PaymentScreen from '@screens/PaymentScreen';
 import ProductDetails from '@screens/ProductDetails';
 import RegisterScreen from '@screens/Register';
 import ShippingScreen from '@screens/Shipping';
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
 					{
 						path: '/shipping',
 						element: <ShippingScreen />,
+					},
+					{
+						path: '/payment',
+						element: <PaymentScreen />,
 					},
 				],
 			},
