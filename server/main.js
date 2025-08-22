@@ -33,6 +33,10 @@ app.use('/api/v1/products', productRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/orders', orderRoutes);
 
+app.get('/api/v1/config/paypal', (req, res) => {
+	res.join({ clientId: process.env.PAYPAL_CLIENT_ID });
+});
+
 app.use(errorHandler);
 
 app.listen(port, () => {
