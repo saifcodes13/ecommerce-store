@@ -4,7 +4,6 @@ import {
 } from '@heroicons/react/24/outline';
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -56,6 +55,39 @@ const OrderScreen = () => {
 			}
 		}
 	}, [order, paypal, paypalDispatch, loadingPay, errorPayPal, loadingPayPal]);
+
+	const onApprove = (data, actions) => {
+		return actions.order.capture().then(async function (details) {
+			try {
+				console.log(details);
+				await payOrder({ id: orderId, details });
+				refetch();
+				toast.success('Order paid successfully');
+			} catch (error) {
+				toast.error(error?.data?.message || error?.error);
+			}
+		});
+	};
+
+	const onError = (error) => {
+		toast.error(error?.data?.message || error?.error);
+	};
+
+	const createOrder = (data, actions) => {
+		return actions.order
+			.create({
+				purchase_units: [
+					{
+						amount: {
+							value: order.totalPrice,
+						},
+					},
+				],
+			})
+			.then((orderId) => {
+				return orderId;
+			});
+	};
 
 	return isLoading ? (
 		<Loader />
@@ -194,6 +226,25 @@ const OrderScreen = () => {
 									</dd>
 								</div>
 							</dl>
+
+							<div className='space-y-6 border-t border-slate-200 px-4 py-6 sm:px-6'>
+								{!order.isPaid && (
+									<>
+										{loadingPay && <Loader />}
+										{isPending ? (
+											<Loader />
+										) : (
+											<div>
+												<PayPalButtons
+													createOrder={createOrder}
+													onApprove={onApprove}
+													onError={onError}
+												/>
+											</div>
+										)}
+									</>
+								)}
+							</div>
 
 							{isLoading && <Loader />}
 						</div>
