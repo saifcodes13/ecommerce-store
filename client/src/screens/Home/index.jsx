@@ -1,5 +1,6 @@
 import Alert from '@components/Alert';
 import Loader from '@components/Loader';
+import Paginate from '@components/Paginate';
 import ProductCard from '@components/ProductCard';
 import { useGetProductsQuery } from '@slices/productApiSlice';
 import { useParams } from 'react-router-dom';
@@ -10,7 +11,6 @@ const HomeScreen = () => {
 	const { data, isLoading, isError, error } = useGetProductsQuery({
 		pageNumber,
 	});
-	console.log(pageNumber);
 
 	return (
 		<section className='bg-white'>
@@ -28,6 +28,7 @@ const HomeScreen = () => {
 						))}
 					</div>
 				)}
+				<Paginate pages={data?.pages} page={data?.page} />
 			</div>
 		</section>
 	);
