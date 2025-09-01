@@ -2,9 +2,15 @@ import Alert from '@components/Alert';
 import Loader from '@components/Loader';
 import ProductCard from '@components/ProductCard';
 import { useGetProductsQuery } from '@slices/productApiSlice';
+import { useParams } from 'react-router-dom';
 
 const HomeScreen = () => {
-	const { data: products, isLoading, isError, error } = useGetProductsQuery();
+	const { pageNumber } = useParams();
+
+	const { data, isLoading, isError, error } = useGetProductsQuery({
+		pageNumber,
+	});
+	console.log(pageNumber);
 
 	return (
 		<section className='bg-white'>
@@ -17,7 +23,7 @@ const HomeScreen = () => {
 					<Alert type='error'>{error?.data?.message || error?.error}</Alert>
 				) : (
 					<div className='grid mt-6 grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
-						{products.map((prod) => (
+						{data.products.map((prod) => (
 							<ProductCard key={prod._id} product={prod} />
 						))}
 					</div>
