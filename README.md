@@ -75,11 +75,30 @@ database → MongoDB Atlas
 
 ---
 
+## ⚙️ Local Development
+
+```bash
+# Backend
+cd server
+npm install
+npm run server
+
+# Frontend
+cd client
+npm install
+npm run dev
+
+Backend runs on http://localhost:5000
+Frontend runs on http://localhost:3000
+
+---
+
 ## 👨‍💻 Author
 
 **Saif Codes**  
 Full Stack Developer | MERN Stack
 
 If you like this project ⭐ the repo!
+
 
 
