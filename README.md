@@ -63,6 +63,7 @@ client → React frontend
 server → Node/Express API
 database → MongoDB Atlas
 
+---
 
 ## 💡 What This Project Demonstrates
 
@@ -80,4 +81,5 @@ database → MongoDB Atlas
 Full Stack Developer | MERN Stack
 
 If you like this project ⭐ the repo!
+
 
