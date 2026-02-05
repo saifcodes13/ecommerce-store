@@ -1,8 +1,7 @@
 {
-  "name": "store",
+  "name": "server",
   "version": "1.0.0",
   "main": "main.js",
-  "type": "module",
   "scripts": {
     "start": "node server/main.js",
     "server": "nodemon server/main.js",
@@ -20,24 +19,24 @@
     "#controllers/*": "./server/controllers/*",
     "#utils/*": "./server/utils/*"
   },
-  "author": "Saif Tandel",
-  "license": "UNLICENSED",
+  "keywords": [],
+  "author": "saifcodes",
+  "license": "ISC",
   "description": "",
   "dependencies": {
-    "axios": "^1.13.2",
-    "bcrypt": "^6.0.0",
+    "axios": "^1.13.4",
+    "bcryptjs": "^3.0.3",
     "colors": "^1.4.0",
     "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
     "dotenv": "^17.2.3",
-    "express": "^5.1.0",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.20.0",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.1.6",
     "morgan": "^1.10.1",
     "multer": "^2.0.2"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.28.5",
-    "concurrently": "^9.2.1",
     "nodemon": "^3.1.11"
   }
 }

@@ -100,7 +100,7 @@ const getUserProfile = async (req, res) => {
 /**
  * @desc		Update user profile
  * @route		PUT /api/v1/users/profile
- * @access	Private
+ * @access	    Private
  */
 const updateUserProfile = async (req, res) => {
 	const user = await UserModel.findById(req.user._id);
@@ -132,7 +132,7 @@ const updateUserProfile = async (req, res) => {
 /**
  * @desc		Get all users
  * @route		GET /api/v1/users
- * @access	Private/Admin
+ * @access	    Private/Admin
  */
 const getUsers = async (req, res) => {
 	const users = await UserModel.find({});

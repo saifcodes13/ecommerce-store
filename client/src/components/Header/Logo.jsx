@@ -17,7 +17,7 @@ const Logo = () => {
 				/>
 			</svg>
 			<span className='text-base font-bold uppercase tracking-tight text-slate-950'>
-				RST Store
+				shopverse
 			</span>
 		</a>
 	);
