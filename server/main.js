@@ -17,9 +17,17 @@ dotenv.config();
 
 connectDB();
 
+const app = express();
 const port = process.env.PORT || 5000;
 
-const app = express();
+app.use(
+	cors({
+		origin:[
+			"http://localhost:3000",
+			"https://ecommerce-store-ten-chi-86.vercel.app"
+		]
+	})
+)
 
 app.use(express.json()); // Request body parsing
 app.use(cookieParser()); // Cookies parsing and reading
