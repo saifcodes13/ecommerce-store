@@ -1,16 +1,22 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Alert from '@components/Alert';
 import Loader from '@components/Loader';
 import {
 	useCreateProductMutation,
 	useDeleteProductMutation,
-	useGetProductsQuery,
+	
+	useGetAdminProductsQuery
 } from '@slices/productApiSlice';
 import { toast } from 'react-toastify';
 
 const ProductListScreen = () => {
-	const { data: products, error, isLoading, refetch } = useGetProductsQuery();
+	const { data:products, error, isLoading, refetch } = useGetAdminProductsQuery();
+	console.log(products)
+	// const navigate = useNavigate()
+//  console.log(data)
+	// const products = data?.products || []
+	// console.log(products)
 
 	const [createProduct, { isLoading: loadingCreate }] =
 		useCreateProductMutation();
@@ -32,8 +38,10 @@ const ProductListScreen = () => {
 	const handleCreateProduct = async () => {
 		if (window.confirm('Are you sure you want to create a new product?')) {
 			try {
+				console.log("hee;ll")
 				await createProduct();
 				refetch();
+				
 			} catch (error) {
 				toast.error(error?.data?.message || error?.message);
 			}

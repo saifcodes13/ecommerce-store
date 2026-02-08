@@ -4,6 +4,7 @@ import {
 	createProduct,
 	createProductReview,
 	deleteProduct,
+	getAllProductsAdmin,
 	getProductById,
 	getProducts,
 	updateProduct,
@@ -12,7 +13,8 @@ import { admin, protect } from '#middlewares/auth.middleware.js';
 
 const router = express.Router();
 
-router.route('/').get(getProducts).post(protect, admin, createProduct);
+router.route('/').get(getProducts).post(protect, admin, createProduct)
+router.get("/admin",protect, admin, getAllProductsAdmin)
 router
 	.route('/:id')
 	.get(getProductById)

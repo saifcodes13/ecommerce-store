@@ -6,7 +6,7 @@ import ProductModel from '#models/product.model.js';
  * @access	Public
  */
 const getProducts = async (req, res) => {
-	const pageSize = 2;
+	const pageSize = req.user?.isAdmin? 50 : 3;
 	const page = +req.query.pageNumber || 1;
 
 	const keyword = req.query.keyword
@@ -21,6 +21,11 @@ const getProducts = async (req, res) => {
 
 	res.json({ products, page, pages: Math.ceil(count / pageSize) });
 };
+
+const getAllProductsAdmin = async (req, res) => {
+	const products = await ProductModel.find({})
+	res.json(products)
+}
 
 /**
  * @desc		Fetch single product by ID
@@ -162,4 +167,5 @@ export {
 	getProductById,
 	getProducts,
 	updateProduct,
+	getAllProductsAdmin
 };

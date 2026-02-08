@@ -12,6 +12,7 @@ import orderRoutes from "#routes/order.route.js";
 import productRoutes from "#routes/product.route.js";
 import uploadRoutes from "#routes/upload.route.js";
 import userRoutes from "#routes/user.route.js";
+import adminRoutes from "#routes/admin.route.js";
 
 dotenv.config();
 
@@ -36,6 +37,9 @@ app.use(cookieParser()); // Cookies parsing and reading
 app.use(morgan("dev"));
 
 app.use("/api/v1/products", productRoutes);
+
+app.use("/api/v1/admin", adminRoutes);
+
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/orders", orderRoutes);
 app.use("/api/v1/upload", uploadRoutes);

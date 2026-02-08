@@ -106,6 +106,9 @@ const router = createBrowserRouter([
 						element: <ProductEditScreen />,
 					},
 					{
+
+					},
+					{
 						path: '/admin/userlist',
 						element: <UserListScreen />,
 					},

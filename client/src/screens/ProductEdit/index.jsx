@@ -29,6 +29,7 @@ const ProductEditScreen = () => {
 		isLoading,
 		error,
 	} = useGetProductDetailsQuery(productId);
+	console.log(product)
 
 	const [updateProduct, { isLoading: loadingUpdate }] =
 		useUpdateProductMutation();
