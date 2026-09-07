@@ -1,19 +1,40 @@
 import { useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import AllCategoriesMenuDisplay from './AllCategoriesMenuDisplay';
 import MegaMenuItem from './MegaMenuItem';
 import MenMenuDisplay from './MenMenuDisplay';
+import WomenMenuDisplay from './WomenMenuDisplay';
+import KidsMenuDisplay from './KidsMenuDisplay';
+import CollectionsMenuDisplay from './CollectionsMenuDisplay';
+import WatchesMenuDisplay from './WatchesMenuDisplay';
+import ShoesMenuDisplay from './ShoesMenuDisplay';
+import AccessoriesMenuDisplay from './AccessoriesMenuDisplay';
+import SaleMenuDisplay from './SaleMenuDisplay';
 
 const menuComponents = {
 	'All Categories': AllCategoriesMenuDisplay,
 	Men: MenMenuDisplay,
+	Women: WomenMenuDisplay,
+	Kids: KidsMenuDisplay,
+	Collections: CollectionsMenuDisplay,
+	Watches: WatchesMenuDisplay,
+	Shoes: ShoesMenuDisplay,
+	Accessories: AccessoriesMenuDisplay,
+	Sale: SaleMenuDisplay,
 };
 
 const MegaMenu = () => {
 	const [currentMenu, setCurrentMenu] = useState(null);
 	const menuRef = useRef(null);
+	const location = useLocation();
 
 	const CurrentMenuComponent = currentMenu ? menuComponents[currentMenu] : null;
+
+	// Close mega menu whenever navigation/route changes
+	useEffect(() => {
+		setCurrentMenu(null);
+	}, [location]);
 
 	useEffect(() => {
 		const handleClickOutside = (e) => {
@@ -79,7 +100,14 @@ const MegaMenu = () => {
 				/>
 			</nav>
 
-			<div ref={menuRef}>
+			<div
+				ref={menuRef}
+				onClick={(e) => {
+					if (e.target.closest('a') || e.target.closest('button')) {
+						setCurrentMenu(null);
+					}
+				}}
+			>
 				{CurrentMenuComponent && <CurrentMenuComponent />}
 			</div>
 		</>

@@ -11,14 +11,13 @@ const MenMenuDisplay = () => {
 							Categories
 						</h6>
 						<ul className='flex flex-col gap-y-3'>
-							<LinkItem url='#' label="Men's Fashion" />
-							<LinkItem url='#' label='New Arrivals' />
-							<LinkItem url='#' label='Clothing' />
-							<LinkItem url='#' label='Footwear' />
-							<LinkItem url='#' label='Watches' />
-							<LinkItem url='#' label='Jewellery' />
-							<LinkItem url='#' label='Backpacks' />
-							<LinkItem url='#' label='Luggage' />
+							<LinkItem url='/search/Men' label="All Men's Collection" />
+							<LinkItem url='/search/Jeans' label='Denim & Jeans' />
+							<LinkItem url='/search/Suit' label='Tailored Suits' />
+							<LinkItem url='/search/Polo' label='Shirts & Polos' />
+							<LinkItem url='/search/Shoes' label='Footwear & Boots' />
+							<LinkItem url='/search/Watches' label='Timepieces' />
+							<LinkItem url='/search/Sweater' label='Cashmere & Knits' />
 						</ul>
 					</div>
 
@@ -27,20 +26,17 @@ const MenMenuDisplay = () => {
 							Top Brands
 						</h6>
 						<ul className='flex flex-col gap-y-3'>
-							<LinkItem url='#' label='Nike' />
-							<LinkItem url='#' label='Tommy Hilfiger' />
-							<LinkItem url='#' label='Skechers' />
-							<LinkItem url='#' label='Converse' />
-							<LinkItem url='#' label='Puma' />
-							<LinkItem url='#' label='Adidas' />
-							<LinkItem url='#' label='Under Armour' />
-							<LinkItem url='#' label='Jack & Jones' />
+							<LinkItem url='/search/DenimPro' label='DenimPro' />
+							<LinkItem url='/search/Atelier' label='Atelier Milano' />
+							<LinkItem url='/search/Club' label='Club Sartoria' />
+							<LinkItem url='/search/Cobbler' label='Cobbler & Co' />
+							<LinkItem url='/search/Geneva' label='Geneva Chrono' />
 						</ul>
 					</div>
 
 					<div className='col-span-5'>
 						<CategoryImageBox
-							url='#'
+							url='/search/Watches'
 							imageUrl='/images/men-watches-category.jpg'
 							label='Luxury Watches'
 						/>
@@ -48,7 +44,7 @@ const MenMenuDisplay = () => {
 
 					<div className='col-span-3'>
 						<CategoryImageBox
-							url='#'
+							url='/search/Suit'
 							imageUrl='/images/mens-suit-category.jpg'
 							label="Men's Suits"
 						/>

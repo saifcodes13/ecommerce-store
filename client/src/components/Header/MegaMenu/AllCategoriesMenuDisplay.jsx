@@ -7,56 +7,56 @@ const AllCategoriesMenuDisplay = () => {
 				<div className='grid w-full grid-cols-12 gap-8'>
 					<div className='col-span-3'>
 						<CategoryImageBox
-							url='#'
+							url='/search/Men'
 							imageUrl='/images/men-category.jpg'
 							label='Men'
 						/>
 					</div>
 					<div className='col-span-3'>
 						<CategoryImageBox
-							url='#'
+							url='/search/Women'
 							imageUrl='/images/women-category.jpg'
 							label='Women'
 						/>
 					</div>
 					<div className='col-span-3'>
 						<CategoryImageBox
-							url='#'
+							url='/search/Kids'
 							imageUrl='/images/kids-category.jpg'
 							label='Kids'
 						/>
 					</div>
 					<div className='col-span-3'>
 						<CategoryImageBox
-							url='#'
+							url='/search/Collections'
 							imageUrl='/images/collections-category.jpg'
 							label='Collections'
 						/>
 					</div>
 					<div className='col-span-3'>
 						<CategoryImageBox
-							url='#'
+							url='/search/Watches'
 							imageUrl='/images/watches-category.jpg'
 							label='Watches'
 						/>
 					</div>
 					<div className='col-span-3'>
 						<CategoryImageBox
-							url='#'
+							url='/search/Shoes'
 							imageUrl='/images/shoes-category.jpg'
 							label='Shoes'
 						/>
 					</div>
 					<div className='col-span-3'>
 						<CategoryImageBox
-							url='#'
+							url='/search/Accessories'
 							imageUrl='/images/accessories-category.jpg'
 							label='Accessories'
 						/>
 					</div>
 					<div className='col-span-3'>
 						<CategoryImageBox
-							url='#'
+							url='/search/Sale'
 							imageUrl='/images/sale-category.jpg'
 							label='Sale'
 						/>

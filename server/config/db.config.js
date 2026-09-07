@@ -1,5 +1,9 @@
+import dns from 'node:dns';
 import mongoose from 'mongoose';
+import 'colors';
 
+// Fix for Windows / Node.js DNS SRV resolution issue with MongoDB Atlas
+dns.setServers(['8.8.8.8', '8.8.4.4']);
 
 const connectDB = async () => {
 	try {

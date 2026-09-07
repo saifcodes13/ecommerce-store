@@ -1,4 +1,4 @@
-import { CheckIcon, ClockIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { TrashIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 import ItemQuantityDropdown from './ItemQuantityDropdown';
 
@@ -8,65 +8,79 @@ const CartItem = ({
 	handleAddToCart,
 	handleRemoveFromCart,
 }) => {
+	const itemTotal = (product.price * product.qty).toLocaleString('en-IN');
+
 	return (
-		<li className='flex py-6 sm:py-10'>
-			<div className='flex-shrink-0'>
+		<li className='flex gap-4 py-6 sm:gap-6 sm:py-8'>
+			{/* Product Thumbnail */}
+			<Link
+				to={`/product/${product._id}`}
+				className='relative h-28 w-24 shrink-0 overflow-hidden rounded-xl border border-slate-100 bg-slate-50 sm:h-32 sm:w-28'
+			>
 				<img
 					src={product.image}
-					alt={product.alt}
-					className='h-24 w-24 rounded-md object-cover object-center sm:h-48 sm:w-48'
+					alt={product.name}
+					className='h-full w-full object-cover object-center transition-opacity hover:opacity-90'
 				/>
-			</div>
+			</Link>
 
-			<div className='ml-4 flex flex-1 flex-col justify-between sm:ml-6'>
-				<div className='relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0'>
+			{/* Item Details */}
+			<div className='flex flex-1 flex-col justify-between'>
+				<div className='flex items-start justify-between gap-4'>
 					<div>
-						<div className='flex justify-between'>
-							<h3 className='text-sm'>
-								<Link
-									to={`/product/${product._id}`}
-									className='text-base font-semibold text-slate-700 hover:text-slate-800'>
-									{product.name}
-								</Link>
-							</h3>
-						</div>
+						{product.brand && (
+							<p className='text-[11px] font-semibold uppercase tracking-wider text-slate-400'>
+								{product.brand}
+							</p>
+						)}
 
-						<div className='mt-1 flex text-sm'>
-							<p className='text-slate-500'>{product.brand}</p>
-						</div>
+						<h3 className='mt-0.5 text-sm font-semibold text-slate-900 sm:text-base'>
+							<Link
+								to={`/product/${product._id}`}
+								className='transition-colors hover:text-slate-600'
+							>
+								{product.name}
+							</Link>
+						</h3>
 
-						<p className='mt-1 text-sm font-medium text-slate-900'>
-							₹{product.price}
-						</p>
+						<div className='mt-1.5 flex items-center gap-2'>
+							<span className='inline-block h-1.5 w-1.5 rounded-full bg-emerald-500' />
+							<span className='text-xs font-medium text-slate-600'>
+								{product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}
+							</span>
+						</div>
 					</div>
 
-					<div className='mt-4 sm:mt-0 sm:pr-9'>
-						<ItemQuantityDropdown
-							product={product}
-							index={index}
-							handleAddToCart={handleAddToCart}
-						/>
-
-						<div className='absolute right-0 top-0'>
-							<button
-								onClick={() => handleRemoveFromCart(product._id)}
-								className='-m-2 inline-flex p-2 text-slate-400 hover:text-slate-500'>
-								<span className='sr-only'>Remove</span>
-								<XMarkIcon className='h-5 w-5' />
-							</button>
-						</div>
+					{/* Price */}
+					<div className='text-right'>
+						<p className='text-base font-bold text-slate-900'>
+							₹{itemTotal}
+						</p>
+						{product.qty > 1 && (
+							<p className='text-[11px] text-slate-400'>
+								₹{product.price.toLocaleString('en-IN')} each
+							</p>
+						)}
 					</div>
 				</div>
 
-				<p className='mt-4 flex space-x-2 text-sm text-slate-700'>
-					{product.countInStock > 0 ? (
-						<CheckIcon className='h-5 w-5 text-green-500' />
-					) : (
-						<ClockIcon className='h-5 w-5 text-slate-300' />
-					)}
+				{/* Quantity & Remove Row */}
+				<div className='mt-4 flex items-center justify-between pt-2'>
+					<ItemQuantityDropdown
+						product={product}
+						index={index}
+						handleAddToCart={handleAddToCart}
+					/>
 
-					<span>{product.countInStock > 0 ? 'In Stock' : 'Not Available'}</span>
-				</p>
+					<button
+						type='button'
+						onClick={() => handleRemoveFromCart(product._id)}
+						className='inline-flex items-center gap-1 text-xs font-medium text-slate-400 transition-colors hover:text-rose-600'
+					>
+						<TrashIcon className='h-3.5 w-3.5' />
+						<span>Remove</span>
+					</button>
+				</div>
 			</div>
 		</li>
 	);

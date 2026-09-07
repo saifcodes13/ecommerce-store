@@ -1,23 +1,35 @@
-import React from 'react';
+import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
 
-const ItemQuantityDropdown = ({ index, product, handleAddToCart }) => {
+const ItemQuantityDropdown = ({ product, handleAddToCart }) => {
+	const currentQty = product.qty || 1;
+	const maxStock = product.countInStock || 10;
+
 	return (
-		<>
-			<label htmlFor={`quantity-${index}`} className='sr-only'>
-				Quantity, {product.name}
-			</label>
-			<select
-				id={`quantity-${index}`}
-				value={product.qty}
-				onChange={(e) => handleAddToCart(product, +e.target.value)}
-				className='min-w-12 max-w-full rounded-md border border-gray-300 px-1.5 py-1.5 text-left text-base font-medium leading-5 text-slate-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm'>
-				{[...Array(product.countInStock).keys()].map((x) => (
-					<option key={x + 1} value={x + 1}>
-						{x + 1}
-					</option>
-				))}
-			</select>
-		</>
+		<div className='inline-flex items-center rounded-lg border border-slate-200 bg-white shadow-xs'>
+			<button
+				type='button'
+				onClick={() => handleAddToCart(product, currentQty - 1)}
+				disabled={currentQty <= 1}
+				aria-label='Decrease quantity'
+				className='flex h-8 w-8 items-center justify-center text-slate-500 transition-colors hover:text-slate-900 disabled:cursor-not-allowed disabled:opacity-30'
+			>
+				<MinusIcon className='h-3.5 w-3.5' strokeWidth={2} />
+			</button>
+
+			<span className='min-w-8 text-center text-xs font-semibold text-slate-900'>
+				{currentQty}
+			</span>
+
+			<button
+				type='button'
+				onClick={() => handleAddToCart(product, currentQty + 1)}
+				disabled={currentQty >= maxStock}
+				aria-label='Increase quantity'
+				className='flex h-8 w-8 items-center justify-center text-slate-500 transition-colors hover:text-slate-900 disabled:cursor-not-allowed disabled:opacity-30'
+			>
+				<PlusIcon className='h-3.5 w-3.5' strokeWidth={2} />
+			</button>
+		</div>
 	);
 };
 

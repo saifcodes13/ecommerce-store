@@ -2,6 +2,14 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import {
+	MapPinIcon,
+	CreditCardIcon,
+	ShoppingBagIcon,
+	LockClosedIcon,
+	ShieldCheckIcon,
+	PencilSquareIcon,
+} from '@heroicons/react/24/outline';
 
 import CheckoutSteps from '@components/CheckoutSteps';
 import Loader from '@components/Loader';
@@ -13,14 +21,15 @@ const PlaceOrderScreen = () => {
 	const dispatch = useDispatch();
 
 	const cart = useSelector((state) => state.cart);
+	const { shippingAddress, paymentMethod, cartItems } = cart;
 
 	useEffect(() => {
-		if (!cart.shippingAddress.address) {
+		if (!shippingAddress?.address) {
 			navigate('/shipping');
-		} else if (!cart.paymentMethod) {
+		} else if (!paymentMethod) {
 			navigate('/payment');
 		}
-	}, [cart.shippingAddress, cart.paymentMethod, navigate]);
+	}, [shippingAddress, paymentMethod, navigate]);
 
 	const [createOrder, { isLoading }] = useCreateOrderMutation();
 
@@ -37,131 +46,211 @@ const PlaceOrderScreen = () => {
 			}).unwrap();
 
 			dispatch(clearCartItems());
-
 			navigate(`/order/${response._id}`);
 		} catch (error) {
-			toast.error(error?.data?.message);
+			toast.error(error?.data?.message || error?.error || 'Failed to place order');
 		}
 	};
 
+	const numItemsPrice = Number(cart.itemsPrice) || 0;
+	const numShippingPrice = Number(cart.shippingPrice) || 0;
+	const numTaxPrice = Number(cart.taxPrice) || 0;
+	const numTotalPrice = Number(cart.totalPrice) || 0;
+
 	return (
-		<div className='bg-white'>
-			<div className='mx-auto max-w-2xl px-4 py-16 pb-24 sm:px-6 lg:max-w-7xl lg:px-8'>
-				<div className='flex items-center justify-center'>
+		<div className='min-h-[75vh] bg-white'>
+			<div className='mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8'>
+				{/* Stepper */}
+				<div className='flex items-center justify-center pb-8 border-b border-slate-200'>
 					<CheckoutSteps step1 step2 step3 step4 />
 				</div>
-				<h1 className='mt-10 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl'>
-					Place Order
-				</h1>
 
-				<div className='mx-auto max-w-2xl lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 xl:gap-x-24'>
-					<div>
-						<dl className='mt-16 grid grid-cols-2 gap-x-6 text-sm text-slate-600'>
-							<div>
-								<dt className='font-medium text-slate-900'>Shipping Address</dt>
-								<dd className='mt-2'>
-									<address className='not-italic'>
-										<span className='block'>
-											{cart.shippingAddress.address}
-										</span>
-										<span className='block'>
-											{cart.shippingAddress.city},{' '}
-											{cart.shippingAddress.postalCode}
-										</span>
-										<span className='block'>
-											{cart.shippingAddress.country}
-										</span>
-									</address>
-								</dd>
+				<div className='mt-8 flex flex-col gap-2'>
+					<h1 className='text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl'>
+						Review & Place Order
+					</h1>
+					<p className='text-xs text-slate-500'>
+						Please review your shipping details, payment method, and items before placing your order.
+					</p>
+				</div>
+
+				<div className='mt-8 grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12'>
+					{/* Left Section: Order Details */}
+					<div className='flex flex-col gap-6 lg:col-span-7'>
+						{/* 1. Shipping Information */}
+						<div className='rounded-2xl border border-slate-200 p-5 sm:p-6 bg-white'>
+							<div className='flex items-center justify-between border-b border-slate-100 pb-3'>
+								<div className='flex items-center gap-2 text-slate-900'>
+									<MapPinIcon className='h-4 w-4 text-slate-500' />
+									<h2 className='text-sm font-semibold'>Shipping Address</h2>
+								</div>
+								<Link
+									to='/shipping'
+									className='inline-flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-slate-900'
+								>
+									<PencilSquareIcon className='h-3.5 w-3.5' />
+									<span>Edit</span>
+								</Link>
 							</div>
-							<div>
-								<dt className='font-medium text-slate-900'>Payment Method</dt>
-								<dd className='mt-2'>
-									<span className='capitalize text-slate-900'>
-										{cart.paymentMethod}
-									</span>
-								</dd>
+
+							<div className='mt-3 text-xs leading-relaxed text-slate-600'>
+								<p className='font-semibold text-slate-900'>{shippingAddress.address}</p>
+								<p>{shippingAddress.city}, {shippingAddress.postalCode}</p>
+								<p>{shippingAddress.country}</p>
 							</div>
-						</dl>
+						</div>
 
-						<div className='mt-14'>
-							<h2 className='text-lg font-medium text-slate-900'>
-								Order Items
-							</h2>
+						{/* 2. Payment Method */}
+						<div className='rounded-2xl border border-slate-200 p-5 sm:p-6 bg-white'>
+							<div className='flex items-center justify-between border-b border-slate-100 pb-3'>
+								<div className='flex items-center gap-2 text-slate-900'>
+									<CreditCardIcon className='h-4 w-4 text-slate-500' />
+									<h2 className='text-sm font-semibold'>Payment Method</h2>
+								</div>
+								<Link
+									to='/payment'
+									className='inline-flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-slate-900'
+								>
+									<PencilSquareIcon className='h-3.5 w-3.5' />
+									<span>Edit</span>
+								</Link>
+							</div>
 
-							<ul className='mt-6 divide-y divide-slate-200 border-t border-slate-200 text-sm font-medium text-slate-500'>
-								{cart?.cartItems?.map((product) => (
-									<li key={product._id} className='flex space-x-6 py-6'>
-										<img
-											src={product.image}
-											alt={product.name}
-											className='h-24 w-24 flex-none rounded-md bg-slate-100 object-cover object-center'
-										/>
-										<div className='flex-auto space-y-1'>
-											<h3 className='text-slate-900'>
-												<Link to={`/product/${product._id}`}>
-													{product.name}
+							<div className='mt-3 flex items-center gap-2 text-xs'>
+								<span className='rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 font-semibold uppercase tracking-wider text-slate-800'>
+									{paymentMethod}
+								</span>
+								<span className='text-slate-500'>Selected for final payment</span>
+							</div>
+						</div>
+
+						{/* 3. Items Review */}
+						<div className='rounded-2xl border border-slate-200 p-5 sm:p-6 bg-white'>
+							<div className='flex items-center justify-between border-b border-slate-100 pb-3'>
+								<div className='flex items-center gap-2 text-slate-900'>
+									<ShoppingBagIcon className='h-4 w-4 text-slate-500' />
+									<h2 className='text-sm font-semibold'>
+										Order Items ({cartItems?.length || 0})
+									</h2>
+								</div>
+								<Link
+									to='/cart'
+									className='inline-flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-slate-900'
+								>
+									<PencilSquareIcon className='h-3.5 w-3.5' />
+									<span>Edit Bag</span>
+								</Link>
+							</div>
+
+							<ul className='mt-3 divide-y divide-slate-100'>
+								{cartItems?.map((item) => {
+									const itemTotal = (item.price * item.qty).toLocaleString('en-IN');
+									return (
+										<li key={item._id} className='flex items-center gap-4 py-3.5'>
+											<Link
+												to={`/product/${item._id}`}
+												className='h-16 w-14 shrink-0 overflow-hidden rounded-lg border border-slate-100 bg-slate-50'
+											>
+												<img
+													src={item.image}
+													alt={item.name}
+													className='h-full w-full object-cover object-center'
+												/>
+											</Link>
+
+											<div className='flex flex-1 flex-col justify-between'>
+												<Link
+													to={`/product/${item._id}`}
+													className='text-xs font-semibold text-slate-900 hover:underline line-clamp-1'
+												>
+													{item.name}
 												</Link>
-											</h3>
-											<p>Quantity: {product.qty}</p>
-										</div>
-										<p className='flex-none text-right font-medium text-slate-900'>
-											<span className='font-normal text-slate-900'>
-												{product.qty} x ₹{product.price}{' '}
-											</span>
-											= ₹{product.price * product.qty}
-										</p>
-									</li>
-								))}
+												<p className='mt-0.5 text-[11px] text-slate-500'>
+													Quantity: {item.qty} × ₹{item.price.toLocaleString('en-IN')}
+												</p>
+											</div>
+
+											<div className='text-right'>
+												<p className='text-xs font-bold text-slate-900'>
+													₹{itemTotal}
+												</p>
+											</div>
+										</li>
+									);
+								})}
 							</ul>
 						</div>
 					</div>
 
-					<div className='mt-14'>
-						<h2 className='text-lg font-medium text-slate-900'>
-							Order summary
-						</h2>
+					{/* Right Section: Order Summary */}
+					<div className='lg:col-span-5'>
+						<div className='rounded-2xl border border-slate-200 bg-slate-50/70 p-6 sm:p-7'>
+							<h2 className='text-lg font-semibold text-slate-900'>
+								Order Summary
+							</h2>
+							<p className='mt-0.5 text-xs text-slate-500'>
+								Final cost breakdown including GST
+							</p>
 
-						<div className='mt-4 rounded-lg border border-slate-200 bg-white shadow-sm'>
-							<dl className='space-y-6 border-t border-gray-200 px-4 py-6 sm:px-6'>
-								<div className='flex items-center justify-between'>
-									<dt className='text-sm'>Items</dt>
-									<dd className='text-sm font-medium text-gray-900'>
-										₹{cart.itemsPrice}
+							<dl className='mt-6 space-y-3.5 text-sm'>
+								<div className='flex items-center justify-between text-slate-600'>
+									<dt>Items Subtotal</dt>
+									<dd className='font-medium text-slate-900'>
+										₹{numItemsPrice.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
 									</dd>
 								</div>
 
-								<div className='flex items-center justify-between'>
-									<dt className='text-sm'>Shipping</dt>
-									<dd className='text-sm font-medium text-gray-900'>
-										₹{cart.shippingPrice}
+								<div className='flex items-center justify-between text-slate-600'>
+									<dt>Shipping</dt>
+									<dd className='font-medium text-slate-900'>
+										{numShippingPrice === 0 ? (
+											<span className='font-semibold text-emerald-600'>Free</span>
+										) : (
+											`₹${numShippingPrice.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`
+										)}
 									</dd>
 								</div>
 
-								<div className='flex items-center justify-between'>
-									<dt className='text-sm'>Taxes</dt>
-									<dd className='text-sm font-medium text-gray-900'>
-										₹{cart.taxPrice}
+								<div className='flex items-center justify-between text-slate-600'>
+									<dt>Estimated Taxes (18% GST)</dt>
+									<dd className='font-medium text-slate-900'>
+										₹{numTaxPrice.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
 									</dd>
 								</div>
 
-								<div className='flex items-center justify-between'>
-									<dt className='text-sm'>Total</dt>
-									<dd className='text-sm font-medium text-gray-900'>
-										₹{cart.totalPrice}
+								<div className='flex items-center justify-between border-t border-slate-200 pt-3.5 text-base'>
+									<dt className='font-semibold text-slate-900'>Order Total</dt>
+									<dd className='font-bold text-slate-900'>
+										₹{numTotalPrice.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
 									</dd>
 								</div>
 							</dl>
 
-							<div className='border-t border-slate-200 px-6 py-6 sm:px-6'>
+							<div className='mt-6'>
 								<button
+									type='button'
 									onClick={handlerPlaceOrder}
-									className='w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50'>
-									Place Order
+									disabled={isLoading || cartItems?.length === 0}
+									className='flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 py-3.5 px-4 text-sm font-semibold text-white transition-colors hover:bg-slate-800 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50'
+								>
+									{isLoading ? (
+										<div className='flex items-center gap-2'>
+											<Loader />
+											<span>Placing Order...</span>
+										</div>
+									) : (
+										<>
+											<LockClosedIcon className='h-4 w-4' />
+											<span>Confirm & Place Order</span>
+										</>
+									)}
 								</button>
 							</div>
 
-							{isLoading && <Loader />}
+							<div className='mt-4 flex items-center justify-center gap-1.5 text-[11px] text-slate-500'>
+								<ShieldCheckIcon className='h-3.5 w-3.5 text-slate-400' />
+								<span>256-bit SSL encrypted secure checkout</span>
+							</div>
 						</div>
 					</div>
 				</div>

@@ -15,6 +15,12 @@ import userRoutes from "#routes/user.route.js";
 import adminRoutes from "#routes/admin.route.js";
 
 dotenv.config();
+if (!process.env.MONGO_URI) {
+  dotenv.config({ path: path.resolve(process.cwd(), 'server/.env') });
+}
+if (!process.env.MONGO_URI) {
+  dotenv.config({ path: path.resolve(process.cwd(), '../.env') });
+}
 
 connectDB();
 
